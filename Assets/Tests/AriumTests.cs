@@ -56,7 +56,7 @@ namespace Tests
             [UnityTest]
             public IEnumerator ShouldMoveToPositionBackSide()
             {
-                const float force = 82;
+                const float force = 100;
 
                 Transform playertr = _arium.GetComponent<Transform>("Player");
                 // yield return new WaitForSeconds(2);
@@ -74,7 +74,7 @@ namespace Tests
             [UnityTest]
             public IEnumerator ShouldMoveToPositionleftSide()
             {
-                const float force = 82;
+                const float force = 100;
 
                 Transform playertr = _arium.GetComponent<Transform>("Player");
                 // yield return new WaitForSeconds(2);
@@ -92,7 +92,7 @@ namespace Tests
             [UnityTest]
             public IEnumerator ShouldMoveToPositionRightSide()
             {
-                const float force = 82;
+                const float force = 100;
 
                 Transform playertr = _arium.GetComponent<Transform>("Player");
                 // yield return new WaitForSeconds(2);
@@ -107,7 +107,21 @@ namespace Tests
                 Assert.AreEqual( 0.5f,playertr.position.y);
 
             }   
-
+            [UnityTest]
+            public IEnumerator CollectPickup()
+            {
+                const string pickup = "Pick Up";
+                Transform player = _arium.GetComponent<Transform>("Player");
+                Transform pickupTransform =
+                    _arium.GetComponent<Transform>(pickup);
+                Assert.IsTrue(_arium.FindGameObject(pickup).activeSelf);
+                Vector3 position1 = Vector3.Lerp(
+                    player.position, pickupTransform.position, 1);
+         
+                player.position=position1;
+                yield return new WaitForSeconds(8);
+                Assert.IsFalse(_arium.FindGameObject(pickup).activeSelf);
+            }
             
 
     }

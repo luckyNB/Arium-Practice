@@ -18,7 +18,7 @@ namespace Tests
     public class AriumTests 
     {
         
-        private Arium _arium;
+        private Arium _arium;//Arium Instance
   
 
         [OneTimeSetUp]
@@ -26,7 +26,7 @@ namespace Tests
         {
             _arium = new Arium();
 
-            SceneManager.LoadScene("MiniGame");
+            SceneManager.LoadScene("MiniGame");//Scene is loaded in game cache memory
         }
 
         
@@ -36,8 +36,8 @@ namespace Tests
 
             Transform playertr = _arium.GetComponent<Transform>("Player");// get tranform component for player object
             Transform walltr=_arium.GetComponent<Transform>("East Wall");//get tranform component for walls object
-            PlayerMovement move = new PlayerMovement(Vector2.right,10);//created object for Player 
-            _arium.PerformAction(move, "Player");
+            PlayerMovement move = new PlayerMovement(Vector2.right,10);//set an action for player to move right direction
+            _arium.PerformAction(move, "Player");//Perform an action
 
             float distancebefore = playertr.position.x - walltr.position.x;
           Console.WriteLine(distancebefore);
@@ -51,24 +51,7 @@ namespace Tests
         
         
 
-            [UnityTest]
-            public IEnumerator ShouldMoveToPositionForwardSide()
-            {
-                const float force = 80;
-
-                Transform playertr = _arium.GetComponent<Transform>("Player");
-                // yield return new WaitForSeconds(2);
-                UnityPushObject.Force=Vector3.forward*force;
-                _arium.PerformAction(new UnityPushObject(), "Player");
-                yield return new WaitForSeconds(7);
-
-                float distance = Vector3.Distance(playertr.position, 
-                    Vector3.zero);
-    
-                Assert.IsTrue(distance > 2f);
-                Assert.AreEqual( 0.5f,playertr.position.y);
-
-            }  
+         
             
             [UnityTest]
             public IEnumerator CollectPickup()
@@ -86,62 +69,6 @@ namespace Tests
                 yield return new WaitForSeconds(8);
                 Assert.IsFalse(_arium.FindGameObject(pickup).activeSelf);
             }
-            [UnityTest]
-            public IEnumerator ShouldMoveToPositionBackSide()
-            {
-                const float force = 80;
-
-                Transform playertr = _arium.GetComponent<Transform>("Player");
-                // yield return new WaitForSeconds(2);
-                UnityPushObject.Force=Vector3.back*force;
-                _arium.PerformAction(new UnityPushObject(), "Player");
-                yield return new WaitForSeconds(7);
-
-                float distance = Vector3.Distance(playertr.position, 
-                    Vector3.zero);
-    
-                Assert.IsTrue(distance > 2f);
-                Assert.AreEqual( 0.5f,playertr.position.y);
-
-            }   
-            [UnityTest]
-            public IEnumerator ShouldMoveToPositionleftSide()
-            {
-                const float force = 80;
-
-                Transform playertr = _arium.GetComponent<Transform>("Player");
-                // yield return new WaitForSeconds(2);
-                UnityPushObject.Force=Vector3.left*force;
-                _arium.PerformAction(new UnityPushObject(), "Player");
-                yield return new WaitForSeconds(7);
-
-                float distance = Vector3.Distance(playertr.position, 
-                    Vector3.zero);
-    
-                Assert.IsTrue(distance > 2f);
-                Assert.AreEqual( 0.5f,playertr.position.y);
-
-            }   
-            [UnityTest]
-            public IEnumerator ShouldMoveToPositionRightSide()
-            {
-                const float force = 100;
-
-                Transform playertr = _arium.GetComponent<Transform>("Player");
-                // yield return new WaitForSeconds(2);
-                UnityPushObject.Force=Vector3.right*force;
-                _arium.PerformAction(new UnityPushObject(), "Player");
-                yield return new WaitForSeconds(7);
-
-                float distance = Vector3.Distance(playertr.position, 
-                    Vector3.zero);
-    
-                Assert.IsTrue(distance > 2f);
-                Assert.AreEqual( 0.5f,playertr.position.y);
-
-            }   
-          
-            
-
+           
     }
 }
